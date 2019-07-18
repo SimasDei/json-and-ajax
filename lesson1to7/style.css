@@ -1,0 +1,15 @@
+#output {
+  padding: 20px;
+}
+
+.toggle {
+  padding: 10px;
+  background-color: aliceblue;
+  font-size: 1.3em;
+  margin: 10px;
+}
+
+.active {
+  background-color: aquamarine;
+  color: #fff;
+}

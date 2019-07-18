@@ -1,0 +1,1 @@
+data = '[{"name": "John", "guests": 3, "status": true}, {"name": "Michael", "guests": 5, "status": false}, {"name": "Jennifer", "guests": 2, "status": true}]';

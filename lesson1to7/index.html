@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Json and Ajax Lesson One</title>
+  </head>
+  <body>
+    <div class="container">
+      <div><h2>JSON: JavaScript Object Notation</h2></div>
+      <div id="output"></div>
+      <section id="party"></section>
+      <label for="guestName">Guest Name</label>
+      <input type="text" name="guestName" id="guestName" />
+      <label for="guestCount">➕</label>
+      <input type="nuber" name="guestCount" id="guestCount" value="0" />
+      <input type="button" value="add" />
+    </div>
+  </body>
+  <script src="./json.json"></script>
+  <script>
+    // Lesson Json Api: https://api.myjson.com/bins/101j5p
+    const myObj1 = { first: 'Michael' };
+    const party = JSON.parse(data);
+    document.onload = buildList();
+
+    const Elements = {
+      button: document.querySelector('input[type="button"]'),
+      guestName: document.querySelector('#guestName'),
+      guestCount: document.querySelector('#guestCount'),
+      output: document.querySelector('#output'),
+    };
+    Elements.button.addEventListener('click', e => {
+      party.push({
+        name: Elements.guestName.value,
+        guests: parseInt(Elements.guestCount.value),
+        status: false,
+      });
+      message('✖', `${Elements.guestName.value} ➕ ${Elements.guestCount.value}`, party.length);
+      Elements.guestCount.value = null;
+      Elements.guestName.value = null;
+    });
+
+    const message = (msg, person, id) => {
+      Elements.output.innerHTML += `
+      <div class="toggle" data-id="${id}" data-person="${person}">
+        <span>${msg}</span>
+        ${person}
+      </div>
+      `;
+    };
+
+    const buildList = () => {
+      party.forEach((person, i) => {
+        message('✖', `${person.name} ➕ ${person.guests}`, i);
+      });
+    };
+  </script>
+</html>
