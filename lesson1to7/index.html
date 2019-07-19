@@ -25,7 +25,7 @@
     // Lesson Json Api: https://api.myjson.com/bins/101j5p
     const myObj1 = { first: 'Michael' };
     let el;
-    const party = JSON.parse(data);
+    let party = JSON.parse(data);
 
     const Elements = {
       button: document.querySelector('input[type="button"]'),
@@ -39,9 +39,14 @@
         guests: parseInt(Elements.guestCount.value),
         status: false,
       });
-      message('✖', `${Elements.guestName.value} ➕ ${Elements.guestCount.value}`, party.length);
+      message(
+        '🚫',
+        `${Elements.guestName.value} ➕ ${Elements.guestCount.value}`,
+        party.length - 1,
+      );
+      localStorage.setItem('party', JSON.stringify(party));
       Elements.guestCount.value = null;
-      Elements.guestName.value = null;
+      Elements.guestName.value = 0;
     });
 
     Elements.output.addEventListener('click', e => {
@@ -50,7 +55,7 @@
       el.classList.toggle('toggle--active');
       const checkToggle = el.children[0].innerHTML === '✅' ? '🚫' : '✅';
       el.children[0].innerHTML = checkToggle;
-      party[ds.id] = checkToggle;
+      party[ds.id].status = party[ds.id].status ? false : true;
     });
 
     const message = (msg, person, id, className) => {
@@ -63,6 +68,9 @@
     };
 
     const buildList = () => {
+      if (localStorage.getItem('party')) {
+        party = JSON.parse(localStorage.getItem('party'));
+      }
       party.forEach((person, i) => {
         if (person.status) {
           message('✅', `${person.name} ➕ ${person.guests}`, i, 'toggle--active');
