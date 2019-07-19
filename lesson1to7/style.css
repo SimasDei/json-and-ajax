@@ -9,7 +9,7 @@
   margin: 10px;
 }
 
-.active {
+.toggle--active {
   background-color: aquamarine;
   color: #fff;
 }

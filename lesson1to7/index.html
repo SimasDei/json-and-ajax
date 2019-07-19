@@ -24,8 +24,8 @@
   <script>
     // Lesson Json Api: https://api.myjson.com/bins/101j5p
     const myObj1 = { first: 'Michael' };
+    let el;
     const party = JSON.parse(data);
-    document.onload = buildList();
 
     const Elements = {
       button: document.querySelector('input[type="button"]'),
@@ -44,9 +44,18 @@
       Elements.guestName.value = null;
     });
 
-    const message = (msg, person, id) => {
+    Elements.output.addEventListener('click', e => {
+      el = e.target;
+      const ds = el.dataset;
+      el.classList.toggle('toggle--active');
+      const checkToggle = el.children[0].innerHTML === '✅' ? '🚫' : '✅';
+      el.children[0].innerHTML = checkToggle;
+      party[ds.id] = checkToggle;
+    });
+
+    const message = (msg, person, id, className) => {
       Elements.output.innerHTML += `
-      <div class="toggle" data-id="${id}" data-person="${person}">
+      <div class="toggle ${className}" data-id="${id}" data-person="${person}">
         <span>${msg}</span>
         ${person}
       </div>
@@ -55,8 +64,14 @@
 
     const buildList = () => {
       party.forEach((person, i) => {
-        message('✖', `${person.name} ➕ ${person.guests}`, i);
+        if (person.status) {
+          message('✅', `${person.name} ➕ ${person.guests}`, i, 'toggle--active');
+        } else {
+          message('🚫', `${person.name} ➕ ${person.guests}`, i);
+        }
       });
     };
+
+    window.onload = buildList();
   </script>
 </html>
